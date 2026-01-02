@@ -30,6 +30,13 @@
     flex-wrap: wrap !important;
     justify-content: flex-start !important;
   }
+/* 讓超連結失效，不可點擊 */
+  .selectable-color a {
+    pointer-events: none !important;
+    cursor: default !important;
+    color: #000000 !important;
+    text-decoration: none !important;
+  }
 
   .selectable-color {
     flex: 0 0 20% !important; 
@@ -2984,4 +2991,5 @@
             </div>
           </div>
       </main>
+
 
