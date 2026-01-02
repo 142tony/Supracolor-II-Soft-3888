@@ -1,41 +1,28 @@
 <main class="pt-0">
         
 <style>
-  /* 移除網頁預設的外邊距，避免 iframe 出現不必要的白邊 */
+  /* 1. 基礎頁面設定：移除邊距，確保 iframe 顯示乾淨 */
   body, html {
     margin: 0;
     padding: 0;
-    overflow: hidden; /* 防止內部出現捲軸 */
+    overflow-x: hidden; /* 只防止左右捲動 */
+    background-color: transparent;
   }
 
-  /* 確保容器寬度撐滿 */
   main {
     padding: 10px;
     max-width: 100%;
     margin: 0 auto;
+    box-sizing: border-box;
   }
 
-  /* 響應式微調：手機版改成 3 個一列或 4 個一列 (選配) */
-  /* 如果覺得 5 個在手機上太小，可以加下面這段 */
-  @media (max-width: 600px) {
-    .selectable-color {
-      flex: 0 0 33.33% !important; /* 手機版 3 個一列 */
-      max-width: 33.33% !important;
-      width: 33.33% !important;
-    }
-  }
-/* 強制每行顯示 5 個 */
+  /* 2. 佈局設定：強制每行顯示 5 個 */
   .row.row-cols-10 {
     display: flex !important;
     flex-wrap: wrap !important;
     justify-content: flex-start !important;
-  }
-/* 讓超連結失效，不可點擊 */
-  .selectable-color a {
-    pointer-events: none !important;
-    cursor: default !important;
-    color: #000000 !important;
-    text-decoration: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
   .selectable-color {
@@ -47,107 +34,71 @@
     text-align: center !important;
   }
 
-  /* 確保圓形色卡完整且置中 */
-  .masstone-placeholder, .masstone-placeholder img {
-    width: 60px !important;
-    height: 60px !important;
+  /* 3. 圓形色卡樣式 */
+  .masstone-placeholder, 
+  .masstone-placeholder img {
+    width: 65px !important;
+    height: 65px !important;
     border-radius: 50% !important;
     margin: 0 auto !important;
     display: block !important;
     object-fit: cover !important;
   }
 
-  /* 文字顯示分兩排 */
-  .text-small-black a {
+  /* 4. 超連結設定：黑色、失效、無底線 */
+  .selectable-color a {
+    pointer-events: none !important; /* 禁止點擊 */
+    cursor: default !important;
+    color: #000000 !important;
+    text-decoration: none !important;
     display: flex !important;
-    flex-direction: column !important;
+    flex-direction: column !important; /* 強制文字分兩排 */
     align-items: center !important;
-    color: #000000 !important; /* 強制超連結為黑色 */
-    text-decoration: none !important; /* 移除底線 */
   }
 
-  /* 色號數字：增加上邊距 */
+  .selectable-color a:hover {
+    color: #000000 !important;
+  }
+
+  /* 5. 文字排版細節 */
   .paint-code {
     display: block !important;
-    margin-top: 8px !important;   /* 這裡控制數字與圓圈的距離 */
-    margin-bottom: 2px !important; /* 數字與名稱的距離 */
+    margin-top: 10px !important;   /* 數字與圓圈的間距 */
+    margin-bottom: 2px !important;  /* 數字與名稱的間距 */
     font-size: 11px !important;
+    color: #333 !important;
   }
 
-  /* 顏色名稱 */
   .text-small-black strong {
     font-size: 13px !important;
     line-height: 1.2 !important;
+    display: block !important;
   }
 
-  /* 超連結樣式：滑鼠移上去也不變色 */
-  .selectable-color a:hover {
-    color: #000000 !important;
-    text-decoration: none !important;
-  }
-
-  /* 隱藏成分小字 (PW6等) 或讓它靠下顯示 */
+  /* 隱藏成分小字 (如 PW6) 讓版面更乾淨，若要顯示請改為 block */
   .pigments {
-    display: block !important;
-    font-size: 10px !important;
-    color: #999 !important;
-    margin-top: 2px !important;
+    display: none !important; 
   }
 
-  /* 確保圓形色卡完整且置中 */
-  .masstone-placeholder, .masstone-placeholder img {
-    width: 60px !important;  /* 根據 5 列寬度調整大小 */
-    height: 60px !important;
-    border-radius: 50% !important;
-    margin: 0 auto !important;
-    display: block !important;
-  }
-  
-  /* 修正文字排版 */
-  .text-small-black {
-    font-size: 12px !important;
-    margin-top: 5px !important;
-    line-height: 1.2 !important;
-  }
-  .brands-sets-select + .dropdown-menu {
-    min-width: 15em;
-    max-width: 20em;
-  }
-
-  .sortable {
-    display: grid;
-    /* grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); */
-    grid-template-columns: repeat(auto-fill, 120px);
-    gap: 0rem;
-  }
-
-  .selectable-color.shrinking {
-    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-  }
-
-  /*
-  .sortable {
-    &[data-tray="deselected"] {
-      .selectable-color:hover {
-        opacity: 1 !important;
-        transition: cubic-bezier(1, 0, 0, 1);
-      }
+  /* 6. 響應式微調：手機版 (寬度 600px 以下) 改成 3 個一列 */
+  @media (max-width: 600px) {
+    .selectable-color {
+      flex: 0 0 33.33% !important;
+      max-width: 33.33% !important;
+      width: 33.33% !important;
+      padding: 10px 2px !important;
+    }
+    .masstone-placeholder, 
+    .masstone-placeholder img {
+      width: 55px !important;
+      height: 55px !important;
     }
   }
-  */
 
-  .sortable-ghost {
-    opacity: 0.3;
-  }
-
-  .sortable-drag {
-    cursor: grabbing;
-  }
-
-  .shrink-hide {
-    transform: scale(0);
-    opacity: 0;
-  }
+  /* 7. 原有功能性樣式 (保留) */
+  .sortable { display: none !important; } /* 隱藏不需要的排序工具 */
+  .brands-sets-select + .dropdown-menu { min-width: 15em; max-width: 20em; }
+  .selectable-color.shrinking { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
 </style>
 
 
@@ -2991,5 +2942,6 @@
             </div>
           </div>
       </main>
+
 
 
