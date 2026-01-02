@@ -1,6 +1,25 @@
 <main class="pt-0">
         
 <style>
+/* 處理沒有圖片的色卡：強制顯示圓形白色背景 */
+  .dot-placeholder, 
+  .masstone-placeholder {
+    background-color: #ffffff !important; /* 強制白色 */
+    border: 1px solid #eeeeee !important; /* 加一點淺灰色邊框，不然在白底網頁會看不見圓圈 */
+    width: 65px !important;
+    height: 65px !important;
+    border-radius: 50% !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 確保載入失敗的圖片不會破壞形狀 */
+  img:not([src]), img[src=""] {
+    opacity: 0 !important;
+  }
   /* 1. 基礎頁面設定：移除邊距，確保 iframe 顯示乾淨 */
   body, html {
     margin: 0;
@@ -2942,6 +2961,7 @@
             </div>
           </div>
       </main>
+
 
 
 
